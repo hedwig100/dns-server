@@ -12,8 +12,8 @@ pub enum ResultCode {
     REFUSED = 5,
 }
 
-impl ResultCode {
-    pub fn from_num(num: u8) -> ResultCode {
+impl From<u8> for ResultCode {
+    fn from(num: u8) -> Self {
         match num {
             1 => ResultCode::FORMERR,
             2 => ResultCode::SERVFAIL,
@@ -83,7 +83,7 @@ impl DnsHeader {
         self.opcode = (a >> 3) & 0x0F;
         self.response = (a & (1 << 7)) > 0;
 
-        self.rescode = ResultCode::from_num(b & 0x0F);
+        self.rescode = ResultCode::from(b & 0x0F);
         self.checking_disabled = (b & (1 << 4)) > 0;
         self.authed_data = (b & (1 << 5)) > 0;
         self.z = (b & (1 << 6)) > 0;
