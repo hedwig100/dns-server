@@ -1,5 +1,4 @@
-type Error = Box<dyn std::error::Error>;
-type Result<T> = std::result::Result<T, Error>;
+use crate::error::Result;
 
 pub struct BytePacketBuffer {
     pub buf: [u8; 512],

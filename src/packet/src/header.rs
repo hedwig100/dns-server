@@ -1,7 +1,5 @@
 use crate::buffer;
-
-type Error = Box<dyn std::error::Error>;
-type Result<T> = std::result::Result<T, Error>;
+use crate::error::Result;
 
 /// ResultCode is for values of rescode field of dns header
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
