@@ -1,4 +1,4 @@
-use crate::buffer;
+use crate::buffer::{self, BytePacketBuffer};
 use crate::error::Result;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
@@ -40,6 +40,16 @@ impl DnsQuestion {
         buffer.read_qname(&mut self.name)?;
         self.qtype = QueryType::from(buffer.read_u16()?); // qtype
         let _ = buffer.read_u16(); // class
+
+        Ok(())
+    }
+
+    pub(crate) fn write(&self, buffer: &mut BytePacketBuffer) -> Result<()> {
+        buffer.write_qname(&self.name)?;
+
+        let typenum: u16 = (&self.qtype).into();
+        buffer.write_u16(typenum)?;
+        buffer.write_u16(1)?;
 
         Ok(())
     }

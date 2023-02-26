@@ -1,4 +1,4 @@
-use crate::buffer;
+use crate::buffer::{self, BytePacketBuffer};
 use crate::error::Result;
 use crate::query::QueryType;
 use std::net;
@@ -53,5 +53,34 @@ impl DnsRecord {
                 })
             }
         }
+    }
+
+    pub(crate) fn write(&self, buffer: &mut BytePacketBuffer) -> Result<usize> {
+        let start_pos = buffer.pos();
+
+        match *self {
+            DnsRecord::A {
+                ref domain,
+                ref addr,
+                ttl,
+            } => {
+                buffer.write_qname(domain)?;
+                buffer.write_u16((&QueryType::A).into())?;
+                buffer.write_u16(1)?;
+                buffer.write_u32(ttl)?;
+                buffer.write_u16(4)?;
+
+                let octets = addr.octets();
+                buffer.write_u8(octets[0])?;
+                buffer.write_u8(octets[1])?;
+                buffer.write_u8(octets[2])?;
+                buffer.write_u8(octets[3])?;
+            }
+            DnsRecord::UNKNOWN { .. } => {
+                println!("Skipping record: {:?}", self);
+            }
+        }
+
+        Ok(buffer.pos() - start_pos)
     }
 }
