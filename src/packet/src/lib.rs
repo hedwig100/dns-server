@@ -2,11 +2,13 @@ pub mod buffer;
 mod error;
 pub mod header;
 pub mod query;
+pub mod record;
 
 use buffer::BytePacketBuffer;
 use error::Result;
 use header::DnsHeader;
-use query::{DnsQuestion, DnsRecord, QueryType};
+use query::{DnsQuestion, QueryType};
+use record::DnsRecord;
 
 #[derive(Clone, Debug)]
 pub struct DnsPacket {
