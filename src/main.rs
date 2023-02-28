@@ -31,8 +31,8 @@ fn read_packet() -> Result<()> {
 }
 
 fn main() -> Result<()> {
-    let qname = "google.com";
-    let qtype = query::QueryType::A;
+    let qname = "yahoo.com";
+    let qtype = query::QueryType::MX;
 
     let server = ("8.8.8.8", 53);
 
