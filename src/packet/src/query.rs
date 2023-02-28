@@ -11,9 +11,9 @@ pub enum QueryType {
     AAAA,  // 28
 }
 
-impl From<&QueryType> for u16 {
-    fn from(q: &QueryType) -> u16 {
-        match *q {
+impl From<QueryType> for u16 {
+    fn from(q: QueryType) -> u16 {
+        match q {
             QueryType::UNKNOWN(x) => x,
             QueryType::A => 1,
             QueryType::NS => 2,
@@ -59,7 +59,7 @@ impl DnsQuestion {
     pub(crate) fn write(&self, buffer: &mut BytePacketBuffer) -> Result<()> {
         buffer.write_qname(&self.name)?;
 
-        let typenum: u16 = (&self.qtype).into();
+        let typenum: u16 = self.qtype.into();
         buffer.write_u16(typenum)?;
         buffer.write_u16(1)?;
 

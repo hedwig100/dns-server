@@ -136,7 +136,7 @@ impl DnsRecord {
                 ttl,
             } => {
                 buffer.write_qname(domain)?;
-                buffer.write_u16((&QueryType::A).into())?;
+                buffer.write_u16(QueryType::A.into())?;
                 buffer.write_u16(1)?;
                 buffer.write_u32(ttl)?;
                 buffer.write_u16(4)?;
@@ -153,7 +153,7 @@ impl DnsRecord {
                 ttl,
             } => {
                 buffer.write_qname(domain)?;
-                buffer.write_u16((&QueryType::NS).into())?;
+                buffer.write_u16(QueryType::NS.into())?;
                 buffer.write_u16(1)?;
                 buffer.write_u32(ttl)?;
 
@@ -171,7 +171,7 @@ impl DnsRecord {
                 ttl,
             } => {
                 buffer.write_qname(domain)?;
-                buffer.write_u16((&QueryType::CNAME).into())?;
+                buffer.write_u16(QueryType::CNAME.into())?;
                 buffer.write_u16(1)?;
                 buffer.write_u32(ttl)?;
 
@@ -190,7 +190,7 @@ impl DnsRecord {
                 ttl,
             } => {
                 buffer.write_qname(domain)?;
-                buffer.write_u16((&QueryType::MX).into())?;
+                buffer.write_u16(QueryType::MX.into())?;
                 buffer.write_u16(1)?;
                 buffer.write_u32(ttl)?;
 
@@ -209,7 +209,7 @@ impl DnsRecord {
                 ttl,
             } => {
                 buffer.write_qname(domain)?;
-                buffer.write_u16((&QueryType::AAAA).into())?;
+                buffer.write_u16(QueryType::AAAA.into())?;
                 buffer.write_u16(1)?;
                 buffer.write_u32(ttl)?;
                 buffer.write_u16(16)?;
