@@ -17,7 +17,7 @@ impl BytePacketBuffer {
         self.pos
     }
 
-    pub fn step(&mut self, steps: usize) -> Result<()> {
+    pub(crate) fn step(&mut self, steps: usize) -> Result<()> {
         self.pos += steps;
         Ok(())
     }
@@ -53,12 +53,12 @@ impl BytePacketBuffer {
         Ok(&self.buf[start..start + len as usize])
     }
 
-    pub fn read_u16(&mut self) -> Result<u16> {
+    pub(crate) fn read_u16(&mut self) -> Result<u16> {
         let res = ((self.read()? as u16) << 8) | (self.read()? as u16);
         Ok(res)
     }
 
-    pub fn read_u32(&mut self) -> Result<u32> {
+    pub(crate) fn read_u32(&mut self) -> Result<u32> {
         let res = ((self.read()? as u32) << 24)
             | ((self.read()? as u32) << 16)
             | ((self.read()? as u32) << 8)
@@ -71,7 +71,7 @@ impl BytePacketBuffer {
     /// The tricky part: Reading domain names, taking labels into consideration.
     /// Will take something like [3]www[6]google[3]com[0] and append
     /// www.google.com to outstr
-    pub fn read_qname(&mut self, outstr: &mut String) -> Result<()> {
+    pub(crate) fn read_qname(&mut self, outstr: &mut String) -> Result<()> {
         let mut pos = self.pos();
 
         let mut jumped = false;

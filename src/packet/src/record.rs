@@ -41,7 +41,7 @@ pub enum DnsRecord {
 }
 
 impl DnsRecord {
-    pub fn read(buffer: &mut buffer::BytePacketBuffer) -> Result<DnsRecord> {
+    pub(crate) fn read(buffer: &mut buffer::BytePacketBuffer) -> Result<DnsRecord> {
         let mut domain = String::new();
         buffer.read_qname(&mut domain)?;
 

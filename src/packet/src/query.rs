@@ -48,7 +48,7 @@ impl DnsQuestion {
         DnsQuestion { name, qtype }
     }
 
-    pub fn read(&mut self, buffer: &mut buffer::BytePacketBuffer) -> Result<()> {
+    pub(crate) fn read(&mut self, buffer: &mut buffer::BytePacketBuffer) -> Result<()> {
         buffer.read_qname(&mut self.name)?;
         self.qtype = QueryType::from(buffer.read_u16()?); // qtype
         let _ = buffer.read_u16(); // class
